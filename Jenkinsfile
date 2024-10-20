@@ -15,6 +15,7 @@ pipeline {
             steps {
                 sh 'terraform apply -auto-approve'
                 sh 'ls -al'  
+                sh 'echo $(pwd)/file1.txt'
             }
         }
     }
