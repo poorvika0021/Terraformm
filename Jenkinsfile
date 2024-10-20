@@ -1,15 +1,45 @@
 pipeline {
     agent any
+    environment {
+        WORK_DIR = "/home/JenkinsPoorvika/Terraformm"
+    }
     stages {
-        stage('Initialize Terraform') {
+        stage('Initialize Workspace') {
             steps {
-                sh 'terraform init'
+                sh 'mkdir -p $WORK_DIR'
+                dir("$WORK_DIR") {
+                    sh 'cp -r $WORKSPACE/* .'
+                }
             }
         }
-        stage('destroy Terraform') {
+        stage('Initialize Terraform') {
             steps {
-                sh 'terraform destroy'
-    }
-}
+                dir("$WORK_DIR") {
+                    sh 'terraform init'
+                }
+            }
+        }
+        stage('Plan Terraform') {
+            steps {
+                dir("$WORK_DIR") {
+                    sh 'terraform plan'
+                }
+            }
+        }
+        stage('Apply Terraform') {
+            steps {
+                dir("$WORK_DIR") {
+                    sh 'terraform apply -auto-approve'
+                }
+            }
+        }
+        stage('Verify File') {
+            steps {
+                dir("$WORK_DIR") {
+                    sh 'ls -al'
+                    sh 'cat file1.txt'
+                }
+            }
+        }
     }
 }
