@@ -19,13 +19,6 @@ pipeline {
                 }
             }
         }
-        stage('Plan Terraform') {
-            steps {
-                dir("$WORK_DIR") {
-                    sh 'terraform plan'
-                }
-            }
-        }
         stage('Apply Terraform') {
             steps {
                 dir("$WORK_DIR") {
