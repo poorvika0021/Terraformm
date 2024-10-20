@@ -33,13 +33,5 @@ pipeline {
                 }
             }
         }
-        stage('Verify File') {
-            steps {
-                dir("$WORK_DIR") {
-                    sh 'ls -al'
-                    sh 'cat file1.txt'
-                }
-            }
-        }
     }
 }
